@@ -1,5 +1,6 @@
 import allure
 
+
 @allure.title("Поиск фильма по названию")
 def test_search_movie(movie_api):
 
@@ -25,6 +26,7 @@ def test_get_movie_by_id(movie_api):
     with allure.step("Проверить наличие ID фильма в ответе"):
         assert response.json()["id"] == 535341
 
+
 @allure.title("Проверка ограничения количества результатов поиска")
 def test_search_movie_limit(movie_api):
 
@@ -40,6 +42,7 @@ def test_search_movie_limit(movie_api):
     with allure.step("Проверить количество результатов"):
         assert len(response.json()["docs"]) <= 5
 
+
 @allure.title("Поиск фильма без API-ключа")
 def test_search_movie_without_token(movie_api):
 
@@ -52,3 +55,25 @@ def test_search_movie_without_token(movie_api):
     with allure.step("Проверить сообщение об ошибке"):
         assert response.json()["error"] == "Unauthorized"
 
+
+@allure.title("Поиск фильма с неверным API-ключом")
+def test_search_movie_with_invalid_token(movie_api):
+
+    with allure.step("Отправить запрос с неверным токеном"):
+        response = movie_api.search_with_invalid_token("1+1")
+
+    with allure.step("Проверить статус ответа"):
+        assert response.status_code == 401
+
+    with allure.step("Проверить сообщение об ошибке"):
+        assert response.json()["error"] == "Unauthorized"
+
+
+@allure.title("Получение фильма по несуществующему ID")
+def test_get_movie_by_invalid_id(movie_api):
+
+    with allure.step("Отправить запрос с несуществующим ID"):
+        response = movie_api.get_movie_by_invalid_id(999999999)
+
+    with allure.step("Проверить статус ответа"):
+        assert response.status_code in [400, 404]
