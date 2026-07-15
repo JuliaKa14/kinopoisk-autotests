@@ -224,3 +224,8 @@ allure-report/
 # IDE
 .vscode/
 .idea/
+
+# Temporary files
+flake8_errors.txt
+tree.txt
+tempCodeRunnerFile.py

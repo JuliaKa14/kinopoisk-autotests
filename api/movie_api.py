@@ -6,14 +6,20 @@ from config import BASE_URL, API_KEY
 class MovieAPI:
     """Класс для работы с API Кинопоиска."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.headers = {
             "X-API-KEY": API_KEY,
             "accept": "application/json"
         }
 
-    def search_movie(self, query, page=1, limit=5):
+    def search_movie(
+        self,
+        query: str,
+        page: int = 1,
+        limit: int = 5
+    ) -> requests.Response:
         """Поиск фильма по названию."""
+
         response = requests.get(
             f"{BASE_URL}/v1.4/movie/search",
             headers=self.headers,
@@ -23,18 +29,28 @@ class MovieAPI:
                 "limit": limit
             }
         )
+
         return response
 
-    def get_movie_by_id(self, movie_id):
+    def get_movie_by_id(
+        self,
+        movie_id: int
+    ) -> requests.Response:
         """Получение фильма по ID."""
+
         response = requests.get(
             f"{BASE_URL}/v1.4/movie/{movie_id}",
             headers=self.headers
         )
+
         return response
 
-    def search_without_token(self, query):
+    def search_without_token(
+        self,
+        query: str
+    ) -> requests.Response:
         """Поиск фильма без API-ключа."""
+
         response = requests.get(
             f"{BASE_URL}/v1.4/movie/search",
             headers={
@@ -44,10 +60,15 @@ class MovieAPI:
                 "query": query
             }
         )
+
         return response
 
-    def search_with_invalid_token(self, query):
+    def search_with_invalid_token(
+        self,
+        query: str
+    ) -> requests.Response:
         """Поиск фильма с неверным API-ключом."""
+
         response = requests.get(
             f"{BASE_URL}/v1.4/movie/search",
             headers={
@@ -58,12 +79,18 @@ class MovieAPI:
                 "query": query
             }
         )
+
         return response
 
-    def get_movie_by_invalid_id(self, movie_id):
+    def get_movie_by_invalid_id(
+        self,
+        movie_id: int
+    ) -> requests.Response:
         """Получение фильма с несуществующим ID."""
+
         response = requests.get(
             f"{BASE_URL}/v1.4/movie/{movie_id}",
             headers=self.headers
         )
+
         return response
