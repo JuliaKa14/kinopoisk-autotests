@@ -71,7 +71,7 @@ pip install -r requirements.txt
 Пример:
 
 ```text
-API_TOKEN=ваш_api_ключ
+API_KEY=ваш_api_ключ
 BASE_URL=https://api.kinopoisk.dev
 ```
 
